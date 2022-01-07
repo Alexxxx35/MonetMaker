@@ -13,10 +13,10 @@
         "--image",
         //"images/lion.jpg",
         "images/licorne.png",
-        "--sigma",
-        "0.33",
         "--blur",
-        "5"
+        "5",
+        // "--speed",
+        // "0.02"
       ]
     }
   ]

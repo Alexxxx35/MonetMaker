@@ -2,20 +2,37 @@ import numpy as np
 import cv2 as cv
 import argparse
 import turtle
+import time
 
 WIDTH, HEIGHT = 800, 600
+window_size = []
 
 cli = argparse.ArgumentParser()
 cli.add_argument("-i", "--image", required=True,
                  help="image path")
-cli.add_argument("-s", "--sigma", required=True,
-                 help="median sigma percentage")
 cli.add_argument("-b", "--blur", required=False,
                  help="gaussian blur intensity")
+cli.add_argument("-W", "--width", required=False,
+                 help="window width")
+cli.add_argument("-H", "--height", required=False,
+                 help="window height")
+cli.add_argument("-s", "--speed", required=False,
+                 help="drawing speed")
+
 args = vars(cli.parse_args())
 
 img = cv.imread(args["image"])
-sigma = float(args["sigma"])
+if "speed" in args and args["speed"]:
+    drawing_speed = float(args["speed"])
+else:
+    drawing_speed = 0
+
+if "width" in args and "height" in args and args["width"] and args["height"]:
+    window_size = (int(args["width"]), int(args["height"]))
+else:
+    window_size.append(800)
+    window_size.append(600)
+
 
 # noise reduction
 gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
@@ -34,8 +51,8 @@ else:
 computed_median = np.median(img)
 
 # apply automatic Canny edge detection using the computed median
-lower = int(max(0, (1.0 - sigma) * computed_median))
-upper = int(min(255, (1.0 + sigma) * computed_median))
+lower = int(max(0, (1.0 - 0.33) * computed_median))
+upper = int(min(255, (1.0 + 0.33) * computed_median))
 automatically_edged = cv.Canny(img, lower, upper)
 
 # apply Canny edge detection using a wide threshold, tight
@@ -59,7 +76,8 @@ height = int(img.shape[0])
 screen = turtle.Screen()
 screen.title("monetmaker")
 
-screen.screensize(width, height)
+screen.screensize(window_size[0], window_size[1])
+
 pen = turtle.Turtle()
 pen.hideturtle()
 screen.tracer(0)
@@ -67,6 +85,7 @@ screen.tracer(0)
 for i in range(int(height/2), int(height/-2),  -1):
     pen.penup()
     pen.goto(-(width / 2), i)
+    time.sleep(drawing_speed)
 
     for l in range(-int(width/2), int(width/2), 1):
         pix_width = int(l + (width/2))
