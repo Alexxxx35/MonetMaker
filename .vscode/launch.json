@@ -11,7 +11,8 @@
       "module": "main",
       "args": [
         "--image",
-        "images/lion.jpg",
+        //"images/lion.jpg",
+        "images/licorne.png",
         "--sigma",
         "0.33",
         "--blur",
