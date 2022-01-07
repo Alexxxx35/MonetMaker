@@ -15,8 +15,8 @@
         "images/licorne.png",
         "--blur",
         "5",
-        // "--speed",
-        // "0.02"
+        "--speed",
+        "2"
       ]
     }
   ]

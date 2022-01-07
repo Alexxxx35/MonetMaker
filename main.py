@@ -6,6 +6,7 @@ import time
 
 WIDTH, HEIGHT = 800, 600
 window_size = []
+pixel_counter=0
 
 cli = argparse.ArgumentParser()
 cli.add_argument("-i", "--image", required=True,
@@ -17,15 +18,15 @@ cli.add_argument("-W", "--width", required=False,
 cli.add_argument("-H", "--height", required=False,
                  help="window height")
 cli.add_argument("-s", "--speed", required=False,
-                 help="drawing speed")
+                 help="drawing speed in pixels")
 
 args = vars(cli.parse_args())
 
 img = cv.imread(args["image"])
 if "speed" in args and args["speed"]:
-    drawing_speed = float(args["speed"])
+    drawing_speed = int(args["speed"])
 else:
-    drawing_speed = 0
+    drawing_speed = 1
 
 if "width" in args and "height" in args and args["width"] and args["height"]:
     window_size = (int(args["width"]), int(args["height"]))
@@ -83,9 +84,9 @@ pen.hideturtle()
 screen.tracer(0)
 
 for i in range(int(height/2), int(height/-2),  -1):
+    print(pixel_counter)
     pen.penup()
     pen.goto(-(width / 2), i)
-    time.sleep(drawing_speed)
 
     for l in range(-int(width/2), int(width/2), 1):
         pix_width = int(l + (width/2))
@@ -96,7 +97,9 @@ for i in range(int(height/2), int(height/-2),  -1):
         else:
             pen.penup()
             pen.forward(1)
-    screen.update()
+    pixel_counter+=1
+    if pixel_counter % drawing_speed == 0: 
+        screen.update()
 
 
 turtle.done()
