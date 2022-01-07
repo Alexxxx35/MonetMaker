@@ -83,14 +83,14 @@ pen = turtle.Turtle()
 pen.hideturtle()
 screen.tracer(0)
 
-for i in range(int(height/2), int(height/-2),  -1):
+for y in range(int(height/2), int(height/-2),  -1):
     print(pixel_counter)
     pen.penup()
-    pen.goto(-(width / 2), i)
+    pen.goto(-(width / 2), y)
 
-    for l in range(-int(width/2), int(width/2), 1):
-        pix_width = int(l + (width/2))
-        pix_height = int(height/2 - i)
+    for x in range(-int(width/2), int(width/2), 1):
+        pix_width = int(x + (width/2))
+        pix_height = int(height/2 - y)
         if dst[pix_height, pix_width] == 0:
             pen.pendown()
             pen.forward(1)
