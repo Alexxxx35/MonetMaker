@@ -8,8 +8,15 @@
       "name": "monetmaker",
       "type": "python",
       "request": "launch",
-      "module": "main.py",
-      "args": ["--image", "images/lion.jpg", "--sigma", "0.33"]
+      "module": "main",
+      "args": [
+        "--image",
+        "images/lion.jpg",
+        "--sigma",
+        "0.33",
+        "--blur",
+        "5"
+      ]
     }
   ]
 }
