@@ -5,13 +5,35 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "monetmaker",
+      "name": "Step 1",
       "type": "python",
       "request": "launch",
-      "module": "main",
+      "program": "${workspaceFolder}/Step_01/main.py",
       "args": [
         "--image",
-        //"images/lion.jpg",
+        "images/lion.jpg",
+        
+      ]
+    },
+    {
+      "name": "Step 2",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/Step_02/main.py",
+      "args": [
+        "--image",
+        "images/licorne.png",
+        "--blur",
+        "5"
+      ]
+    },
+    {
+      "name": "Step 3",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/Step_03/main.py",
+      "args": [
+        "--image",
         "images/licorne.png",
         "--blur",
         "5",
