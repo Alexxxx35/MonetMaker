@@ -12,7 +12,6 @@
       "args": [
         "--image",
         "images/lion.jpg",
-        
       ]
     },
     {
@@ -23,8 +22,6 @@
       "args": [
         "--image",
         "images/licorne.png",
-        "--blur",
-        "5"
       ]
     },
     {
@@ -35,10 +32,8 @@
       "args": [
         "--image",
         "images/licorne.png",
-        "--blur",
-        "5",
         "--speed",
-        "2"
+        "10"
       ]
     }
   ]
