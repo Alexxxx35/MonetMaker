@@ -33,7 +33,19 @@
         "--image",
         "images/licorne.png",
         "--speed",
-        "10"
+        "100"
+      ]
+    },
+    {
+      "name": "Step 4",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/Step_04/main.py",
+      "args": [
+        "--image",
+        "images/licorne.png",
+        "--speed",
+        "100"
       ]
     }
   ]
