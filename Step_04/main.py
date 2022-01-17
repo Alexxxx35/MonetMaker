@@ -90,8 +90,9 @@ screen.title("monetmaker")
 screen.screensize(window_size[0], window_size[1])
 
 pen = turtle.Turtle()
-screen.tracer(drawing_speed)
+pen.ht()
+screen.tracer(drawing_speed, 0)
 
 draw(pen, coords, img.shape)
-turtle.done()
 print('Finished drawing')
+turtle.done()

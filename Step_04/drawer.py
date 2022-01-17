@@ -32,7 +32,7 @@ def draw(pen, coords, shape):
         neighbour = coords[neighbour_i]
 
         distance = math.dist([x, y], [neighbour[0],  neighbour[1]])
-        if (distance <= 1.):
+        if (distance <= 2.):
           pen.pendown()
           pen.goto(neighbour[0] - (width/2), neighbour[1]- (height/2))
           pen.penup()
