@@ -83,7 +83,8 @@ automatically_edged = ~cv.Canny(img, lower_treshold, upper_treshold)
 wide = ~cv.Canny(img, 10, 200)
 tight = ~cv.Canny(img, 225, 250)
 
-coords = get_colors_coords(automatically_edged)
+retval, dst = cv.threshold(automatically_edged, 127, 255, cv.THRESH_BINARY)
+coords = get_colors_coords(dst)
 
 screen = turtle.Screen()
 screen.title("monetmaker")

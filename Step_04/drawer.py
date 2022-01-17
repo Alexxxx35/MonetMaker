@@ -39,3 +39,9 @@ def draw(pen, coords, shape):
 
         coords[current_i] = [0, 0]
         current_i = neighbour_i
+
+    # Hotfix, TODO, understand why some coordinates are not taken in account
+    coords_left = list(filter(lambda x: x != [0, 0], coords))
+    if len(coords) > 0:
+        draw(pen, coords_left, shape)
+
