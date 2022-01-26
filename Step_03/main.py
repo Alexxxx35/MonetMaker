@@ -86,15 +86,6 @@ automatically_edged = ~cv.Canny(img, lower_treshold, upper_treshold)
 wide = ~cv.Canny(img, 10, 200)
 tight = ~cv.Canny(img, 225, 250)
 
-# while True:
-#     cv.imshow("Canny Edge Detection", np.hstack(
-#         [tight, wide, automatically_edged]))
-
-#     if cv.waitKey(1) == 27:
-#         cv.destroyAllWindows()
-#         break
-
-
 retval, dst = cv.threshold(automatically_edged, 127, 255, cv.THRESH_BINARY)
 width = int(img.shape[1])
 height = int(img.shape[0])

@@ -47,8 +47,11 @@ if "blur" in args:
             args["kernel"]), int(
             args["kernel"])), 0) if args["kernel"] else cv.GaussianBlur(gray, (3, 3), 0)
 
+cv.imshow("Canny Edge Detection", blurred)
+cv.waitKey()
+cv.destroyAllWindows()
 
-computed_median = np.median(gray)
+computed_median = np.median(blurred)
 # apply automatic Canny edge detection using the computed median
 lower_treshold = (1.0 - 0.33) * computed_median
 
@@ -64,10 +67,8 @@ automatically_edged = ~cv.Canny(img, lower_treshold, upper_treshold)
 wide = ~cv.Canny(img, 10, 200)
 tight = ~cv.Canny(img, 225, 250)
 
-while True:
-    cv.imshow("Canny Edge Detection", np.hstack(
-        [tight, wide, automatically_edged]))
 
-    if cv.waitKey(1) == 27:
-        cv.destroyAllWindows()
-        break
+cv.imshow("Canny Edge Detection", np.hstack(
+    [tight, wide, automatically_edged]))
+cv.waitKey()
+cv.destroyAllWindows()

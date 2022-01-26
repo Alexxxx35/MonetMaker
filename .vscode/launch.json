@@ -21,7 +21,11 @@
       "program": "${workspaceFolder}/Step_02/main.py",
       "args": [
         "--image",
-        "images/licorne.png",
+        "images/lion.jpg",
+        "--blur",
+        "gaussian",
+        "--kernel",
+        "3"
       ]
     },
     {

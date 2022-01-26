@@ -31,13 +31,6 @@ automatically_edged = ~cv.Canny(img, lower_treshold, upper_treshold)
 wide = ~cv.Canny(img, 10, 200)
 tight = ~cv.Canny(img, 225, 250)
 
-while True:
-    cv.imshow("Canny Edge Detection", np.hstack([tight,wide,automatically_edged]))
-
-    # black & white inversion
-    #cv.imshow("Lion_edge", ~automatically_edged)
-    if cv.waitKey(1) == 27:
-        cv.destroyAllWindows()
-        break
-
-
+cv.imshow("Canny Edge Detection", np.hstack([tight,wide,automatically_edged]))
+cv.waitKey()
+cv.destroyAllWindows()
