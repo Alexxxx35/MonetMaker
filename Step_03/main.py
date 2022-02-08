@@ -112,7 +112,6 @@ for y in range(int(height/2), int(height/-2),  -1):
         else:
             pen.penup()
             pen.forward(1)
-        print(pix_width, pix_height)
 
 
 turtle.done()

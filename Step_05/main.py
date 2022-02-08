@@ -1,8 +1,9 @@
 import argparse
+import os
 import turtle
 from enum import Enum
 import cv2 as cv
-
+from PIL import Image
 
 WIDTH, HEIGHT = 800, 800
 window_size = []
@@ -101,7 +102,7 @@ def draw(new_matrix: list) -> None:
     screen.screensize(window_size[0], window_size[1])
     screen.colormode(255)
     pen = turtle.Turtle()
-    # pen.ht()
+    pen.ht()
     screen.tracer(drawing_speed)
     image_width = new_matrix.shape[1]
     image_height = new_matrix.shape[0]
@@ -114,7 +115,12 @@ def draw(new_matrix: list) -> None:
             pix_height = int(image_height/2 - y)
             pen.color(new_matrix[pix_height, pix_width])
             pen.forward(1)
-            print(pix_width, pix_height)
+        screen.update()
+    # turtle.getscreen().getcanvas().postscript(file='lion_classified_pixels.ps', height=800,
+    #                                           width=800)
+    # img = Image.open('lion_classified_pixels.ps')
+    # img = img.save('images/lion_classified_pixels.png')
+    # os.remove('lion_classified_pixels.ps')
     return
 
 
