@@ -6,10 +6,11 @@ from enum import Enum
 import cv2 as cv
 
 
-WIDTH, HEIGHT = 800, 600
+WIDTH, HEIGHT = 800, 800
 window_size = []
-COLOR_PALETTE = {"Forest1":  	(112, 78, 46), "Forest2": (121, 116, 46),
-                 "Forest3": (194, 231, 127), "Forest4": (230, 248, 178), "Forest5": (112, 145, 118)}
+COLOR_PALETTE = {0: (112, 78, 46), 1: (121, 116, 46),
+                 2: (194, 231, 127), 3: (230, 248, 178),
+                 4: (112, 145, 118)}
 
 
 class blur(Enum):
@@ -75,42 +76,51 @@ else:
     window_size.append(HEIGHT)
 
 
-def establish_color_levels(pixel_palette: dict) -> list:
-    result = []
-    thresold = 255 // len(pixel_palette)
-    level_value = 0
-    for i in range(len(pixel_palette)):
-        level_value += thresold
-        result.append(level_value)
-    return result
-
-
-def calculate_color_level(pixel_rgb: tuple) -> int:
+def pixel_closest_color_from_palette(pixel_rgb: tuple, color_palette: dict) -> tuple:
+    distances = []
     result = 0
-    for i, value in enumerate(pixel_rgb):
-        one_pixel_color_distance = abs(value-pixel_rgb[i])
-        result += one_pixel_color_distance
-    return result
+    for rgb_tuple in color_palette.values():
+        for i, rgb_value in enumerate(pixel_rgb):
+            pixel_color_distance = abs(rgb_value-rgb_tuple[i])
+            result += pixel_color_distance
+        distances.append(result)
+        result = 0
+    index_of_smallest_distance = distances.index(min(distances))
+    return color_palette[index_of_smallest_distance]
 
 
-def classify_pixels(matrix: list):
-    thresholds = establish_color_levels(COLOR_PALETTE)
+def classify_pixels(matrix: list) -> list:
     for pixel_row in matrix:
-        for rgb in pixel_row:
-            color_level = calculate_color_level(rgb)
-            for i, threshold in enumerate(thresholds):
-                if color_level < threshold:
-                    rgb = COLOR_PALETTE["Forest{}".format(i)]
-                    break
+        for i, rgb in enumerate(pixel_row):
+            pixel_row[i] = pixel_closest_color_from_palette(
+                rgb, COLOR_PALETTE)
+    return matrix
 
 
-screen = turtle.Screen()
-screen.title("monetmaker")
-screen.screensize(window_size[0], window_size[1])
+def draw(new_matrix: list) -> None:
+    screen = turtle.Screen()
+    screen.title("monetmaker")
+    screen.screensize(window_size[0], window_size[1])
+    screen.colormode(255)
+    pen = turtle.Turtle()
+    # pen.ht()
+    screen.tracer(drawing_speed)
+    image_width = new_matrix.shape[1]
+    image_height = new_matrix.shape[0]
+    for y in range(int(image_height/2), int(image_height/-2),  -1):
+        pen.penup()
+        pen.goto(-(image_width / 2), y)
+        pen.pendown()
+        for x in range(-int(image_width/2), int(image_width/2), 1):
+            pix_width = int(x + (image_width/2))
+            pix_height = int(image_height/2 - y)
+            pen.color(new_matrix[pix_height, pix_width])
+            pen.forward(1)
+            print(pix_width, pix_height)
+    return
 
-pen = turtle.Turtle()
-pen.ht()
-screen.tracer(drawing_speed, 0)
 
+new_matrix = classify_pixels(img)
+draw(new_matrix)
 print('Finished drawing')
 turtle.done()
