@@ -11,7 +11,7 @@
       "program": "${workspaceFolder}/Step_01/main.py",
       "args": [
         "--image",
-        "images/lion.jpg",
+        "images/lion.jpg"
       ]
     },
     {
@@ -36,6 +36,18 @@
       "args": [
         "--image",
         "images/licorne.png",
+        "--speed",
+        "10"
+      ]
+    },
+    {
+      "name": "Step 5",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/Step_05/main.py",
+      "args": [
+        "--image",
+        "images/lion.jpg",
         "--speed",
         "10"
       ]
