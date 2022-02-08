@@ -1,5 +1,3 @@
-from cv2 import threshold
-import numpy as np
 import argparse
 import turtle
 from enum import Enum
