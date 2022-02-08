@@ -1,9 +1,9 @@
 import argparse
-import os
-import turtle
 from enum import Enum
 import cv2 as cv
-from PIL import Image
+
+from classification import classify_pixels
+from draw import draw
 
 WIDTH, HEIGHT = 800, 800
 window_size = []
@@ -75,56 +75,6 @@ else:
     window_size.append(HEIGHT)
 
 
-def pixel_closest_color_from_palette(pixel_rgb: tuple, color_palette: dict) -> tuple:
-    distances = []
-    result = 0
-    for rgb_tuple in color_palette.values():
-        for i, rgb_value in enumerate(pixel_rgb):
-            pixel_color_distance = abs(rgb_value-rgb_tuple[i])
-            result += pixel_color_distance
-        distances.append(result)
-        result = 0
-    index_of_smallest_distance = distances.index(min(distances))
-    return color_palette[index_of_smallest_distance]
-
-
-def classify_pixels(matrix: list) -> list:
-    for pixel_row in matrix:
-        for i, rgb in enumerate(pixel_row):
-            pixel_row[i] = pixel_closest_color_from_palette(
-                rgb, COLOR_PALETTE)
-    return matrix
-
-
-def draw(new_matrix: list) -> None:
-    screen = turtle.Screen()
-    screen.title("monetmaker")
-    screen.screensize(window_size[0], window_size[1])
-    screen.colormode(255)
-    pen = turtle.Turtle()
-    pen.ht()
-    screen.tracer(drawing_speed)
-    image_width = new_matrix.shape[1]
-    image_height = new_matrix.shape[0]
-    for y in range(int(image_height/2), int(image_height/-2),  -1):
-        pen.penup()
-        pen.goto(-(image_width / 2), y)
-        pen.pendown()
-        for x in range(-int(image_width/2), int(image_width/2), 1):
-            pix_width = int(x + (image_width/2))
-            pix_height = int(image_height/2 - y)
-            pen.color(new_matrix[pix_height, pix_width])
-            pen.forward(1)
-        screen.update()
-    # turtle.getscreen().getcanvas().postscript(file='lion_classified_pixels.ps', height=800,
-    #                                           width=800)
-    # img = Image.open('lion_classified_pixels.ps')
-    # img = img.save('images/lion_classified_pixels.png')
-    # os.remove('lion_classified_pixels.ps')
-    return
-
-
-new_matrix = classify_pixels(img)
-draw(new_matrix)
+new_matrix = classify_pixels(img, COLOR_PALETTE)
+draw(new_matrix, window_size, drawing_speed)
 print('Finished drawing')
-turtle.done()

@@ -9,7 +9,10 @@
       "type": "python",
       "request": "launch",
       "program": "${workspaceFolder}/Step_01/main.py",
-      "args": ["--image", "images/lion.jpg"]
+      "args": [
+        "--image",
+        "images/lion.jpg"
+      ]
     },
     {
       "name": "Step 2",
@@ -30,14 +33,24 @@
       "type": "python",
       "request": "launch",
       "program": "${workspaceFolder}/Step_03/main.py",
-      "args": ["--image", "images/licorne.png", "--speed", "10"]
+      "args": [
+        "--image",
+        "images/licorne.png",
+        "--speed",
+        "10"
+      ]
     },
     {
       "name": "Step 5",
       "type": "python",
       "request": "launch",
       "program": "${workspaceFolder}/Step_05/main.py",
-      "args": ["--image", "images/lion.jpg"]
+      "args": [
+        "--image",
+        "images/lion.jpg",
+        "--speed",
+        "10"
+      ]
     }
   ]
 }
