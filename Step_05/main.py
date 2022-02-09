@@ -3,6 +3,7 @@ from enum import Enum
 import cv2 as cv
 
 from classification import classify_pixels
+from clustering import cluster_pixels
 from draw import draw
 
 WIDTH, HEIGHT = 800, 800
@@ -18,7 +19,13 @@ class blur(Enum):
     radial = 'radial'
     median = 'median'
     bilateral = 'bilateral'
+    def str(self):
+        return self.value
 
+
+class algorithm(Enum):
+    clustering = 'clustering'
+    classification = 'classification'
     def str(self):
         return self.value
 
@@ -26,7 +33,6 @@ class blur(Enum):
 cli = argparse.ArgumentParser()
 cli.add_argument("-i", "--image", required=True,
                  help="image path")
-
 cli.add_argument("-b", "--blur", type=blur, choices=list(blur), required=False,
                  help="blur method pre-applied before Canny Edge Detection (linear, gaussian or radial)")
 cli.add_argument("-k", "--kernel", required=False,
@@ -37,6 +43,8 @@ cli.add_argument("-H", "--height", required=False,
                  help="window height")
 cli.add_argument("-s", "--speed", required=False,
                  help="drawing speed in pixels")
+cli.add_argument("-a", "--algorithm", required=False,
+                 help="clustering or classification")
 
 args = vars(cli.parse_args())
 
@@ -75,6 +83,14 @@ else:
     window_size.append(HEIGHT)
 
 
-new_matrix = classify_pixels(img, COLOR_PALETTE)
+if "algorithm" in args and args["algorithm"] == "classification":
+    new_matrix = classify_pixels(img, COLOR_PALETTE)
+else:
+    new_matrix = cluster_pixels(img)
+
+
+
+
 draw(new_matrix, window_size, drawing_speed)
+
 print('Finished drawing')
