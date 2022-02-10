@@ -63,7 +63,7 @@
         "--speed",
         "10",
         "--algorithm",
-        "classification"
+        "clustering"
       ]
     }
   ]

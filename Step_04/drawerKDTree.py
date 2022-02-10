@@ -1,7 +1,3 @@
-import cv2 as cv
-import math
-from cv2 import sqrt
-import numpy as np
 from sklearn.neighbors import KDTree
 import time
 

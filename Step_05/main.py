@@ -4,7 +4,10 @@ import cv2 as cv
 
 from classification import classify_pixels
 from clustering import cluster_pixels
-from draw import draw
+from draw import draw,drawKDTree,getPixelCoordinatesBygroup , drawBasic
+import turtle
+
+
 
 WIDTH, HEIGHT = 800, 800
 window_size = []
@@ -85,12 +88,35 @@ else:
 
 if "algorithm" in args and args["algorithm"] == "classification":
     new_matrix = classify_pixels(img, COLOR_PALETTE)
+    draw(new_matrix, window_size, drawing_speed)
 else:
-    new_matrix = cluster_pixels(img)
+    x, y, data_size = img.shape
+    kmeans = cluster_pixels(img)
+    mapping = kmeans.labels_.reshape((x,y))
+    ngroup = len(kmeans.cluster_centers_)
+    screen = turtle.Screen()
+    screen.title("monetmaker")
+    screen.screensize(window_size[0], window_size[1])
+    pen = turtle.Turtle()
+    pen.ht()
+    screen.colormode(255)
+    screen.tracer(drawing_speed, 0)
+
+    for i in range(0,ngroup):
+        color = kmeans.cluster_centers_[i]
+        colorInt=((int(color[0]),int(color[1]),int(color[2])))
+        coords = getPixelCoordinatesBygroup(mapping,i)
+        pen.color(colorInt)
+        drawBasic(pen,coords,img.shape,colorInt)
+
+    
 
 
 
 
-draw(new_matrix, window_size, drawing_speed)
+
+
+
+#draw(new_matrix, window_size, drawing_speed)
 
 print('Finished drawing')
