@@ -91,7 +91,9 @@ if "algorithm" in args and args["algorithm"] == "classification":
     draw(new_matrix, window_size, drawing_speed)
 else:
     x, y, data_size = img.shape
-    kmeans = cluster_pixels(img)
+    new_matrix = cluster_pixels(img)
+    draw(new_matrix, window_size, drawing_speed)
+    '''kmeans = cluster_pixels(img)
     mapping = kmeans.labels_.reshape((x,y))
     ngroup = len(kmeans.cluster_centers_)
     screen = turtle.Screen()
@@ -107,7 +109,7 @@ else:
         colorInt=((int(color[0]),int(color[1]),int(color[2])))
         coords = getPixelCoordinatesBygroup(mapping,i)
         pen.color(colorInt)
-        drawBasic(pen,coords,img.shape,colorInt)
+        drawBasic(pen,coords,img.shape,colorInt)'''
 
     
 
