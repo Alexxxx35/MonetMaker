@@ -1,3 +1,31 @@
+### Get started
+- Pour générer un environnement virtuel:
+```
+ python -m venv name_env
+```
+- Pour activer l'environnement virtuel:
+#### Sur linux
+```
+source name_env/bin/activate
+```
+#### Sur windows:
+```
+.\name_env\Scripts\activate
+```
+- Pour installer les dépendances dans l'environnement virtuel:
+```
+ pip install -r requirements.txt
+```
+- Pour lancer le script sur chacune des étapes:
+```
+python -m Step_folder_name/main.py
+```
+- Pour avoir des informations sur les paramètres de la ligne de commande:
+```
+python -m Step_folder_name/main.py -h
+```
+Il est aussi possible d'utiliser le launch.json avec le debugger vscode pour lancer les script. Les lignes de commande sont y déjà configurées.
+
 # Etape 5 - Effets de styles !
 
 Cette étape vise à donner un effet de style aux images via une technique assez simple : Caractériser l'image avec un nombre réduit de couleurs.
