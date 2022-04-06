@@ -14,15 +14,15 @@ source name_env/bin/activate
 ```
 - Pour installer les dépendances dans l'environnement virtuel:
 ```
- pip install -r requirements.txt
+pip install -r requirements.txt
 ```
-- Pour lancer le script sur chacune des étapes:
+- Pour lancer le script sur cette étape:
 ```
-python -m Step_folder_name/main.py
+python main.py -i ../images/lion.jpg
 ```
 - Pour avoir des informations sur les paramètres de la ligne de commande:
 ```
-python -m Step_folder_name/main.py -h
+python main.py -h
 ```
 Il est aussi possible d'utiliser le launch.json avec le debugger vscode pour lancer les script. Les lignes de commande sont y déjà configurées.
 
