@@ -4,8 +4,9 @@ import cv2 as cv
 
 from classification import classify_pixels
 from clustering import cluster_pixels
-from draw import draw,drawKDTree,getPixelCoordinatesBygroup , drawBasic
+from draw import draw,drawKDTree,getPixelCoordinatesBygroup , drawBasic,paint
 import turtle
+import numpy as np
 
 
 
@@ -48,6 +49,9 @@ cli.add_argument("-s", "--speed", required=False,
                  help="drawing speed in pixels")
 cli.add_argument("-a", "--algorithm", required=False,
                  help="clustering or classification")
+cli.add_argument("-p", "--painting", required=False,
+                 help="normal or realistic")
+
 
 args = vars(cli.parse_args())
 
@@ -85,40 +89,65 @@ else:
     window_size.append(WIDTH)
     window_size.append(HEIGHT)
 
+computed_median = np.median(blurred)
+# apply automatic Canny edge detection using the computed median
+lower_treshold = (1.0 - 0.33) * computed_median
+# Here we consider that the max value the image is 255 ( 8bit images)
+upper_treshold = int(min(255, (1.0 + 0.33) * computed_median))
+automatically_edged = ~cv.Canny(blurred, lower_treshold, upper_treshold)
 
+#dst contain the resulting binary image.
+retval, dst = cv.threshold(automatically_edged, 127, 255, cv.THRESH_BINARY)
+
+coords = getPixelCoordinatesBygroup(dst,0)
+
+screen = turtle.Screen()
+screen.title("monetmaker")
+screen.screensize(window_size[0], window_size[1])
+
+pen = turtle.Turtle()
+pen.speed(drawing_speed)
+screen.tracer(drawing_speed, 0)
+pen.ht()
+
+drawBasic(pen,coords,blurred.shape,(0,0,0))
+
+screen.colormode(255)
 if "algorithm" in args and args["algorithm"] == "classification":
     new_matrix = classify_pixels(img, COLOR_PALETTE)
-    draw(new_matrix, window_size, drawing_speed)
+    for value in COLOR_PALETTE.values():
+        print("Painting color: ",value)
+        coords = getPixelCoordinatesBygroup(new_matrix,value)
+
+        if "painting" in args and args["painting"] == "realistic":
+            drawBasic(pen, coords, new_matrix.shape,value)
+        else:
+            paint(pen, coords, new_matrix.shape,value)
+    
 else:
+    
     x, y, data_size = img.shape
-    new_matrix = cluster_pixels(img)
-    draw(new_matrix, window_size, drawing_speed)
-    '''kmeans = cluster_pixels(img)
+    #new_matrix = cluster_pixels(img)
+    kmeans = cluster_pixels(img)
     mapping = kmeans.labels_.reshape((x,y))
     ngroup = len(kmeans.cluster_centers_)
-    screen = turtle.Screen()
-    screen.title("monetmaker")
-    screen.screensize(window_size[0], window_size[1])
-    pen = turtle.Turtle()
-    pen.ht()
-    screen.colormode(255)
-    screen.tracer(drawing_speed, 0)
 
-    for i in range(0,ngroup):
-        color = kmeans.cluster_centers_[i]
-        colorInt=((int(color[0]),int(color[1]),int(color[2])))
-        coords = getPixelCoordinatesBygroup(mapping,i)
-        pen.color(colorInt)
-        drawBasic(pen,coords,img.shape,colorInt)'''
-
-    
-
+    if "painting" in args and args["painting"] == "realistic":
+        for i in range(0,ngroup):
+            color = kmeans.cluster_centers_[i]
+            colorInt=((int(color[0]),int(color[1]),int(color[2])))
+            print("Painting color: ",colorInt)
+            coords = getPixelCoordinatesBygroup(mapping,i)
+            drawBasic(pen, coords, img.shape,colorInt)
+    else:
+        for i in range(0,ngroup):
+            color = kmeans.cluster_centers_[i]
+            colorInt=((int(color[0]),int(color[1]),int(color[2])))
+            print("Painting color: ",colorInt)
+            coords = getPixelCoordinatesBygroup(mapping,i)
+            paint(pen, coords, img.shape,colorInt)
 
 
 
-
-
-
-#draw(new_matrix, window_size, drawing_speed)
-
+turtle.done()
 print('Finished drawing')

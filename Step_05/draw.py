@@ -7,11 +7,23 @@ import math
 def getPixelCoordinatesBygroup(image,group):
     coords = []
     height = len(image)
-    for y, line in enumerate(image):
-        for x, value in enumerate(line):
-            if value == group:
-                coords.append([x, height - y])
+    if isinstance(group, int):
+        dim = 1
+    else:
+        dim = len(group)
+    if dim == 1:
+        for y, line in enumerate(image):
+            for x, value in enumerate(line):
+                if value == group:
+                    coords.append([x, height - y])
+    else:
+        for y, line in enumerate(image):
+            for x, value in enumerate(line):
+                if value[0] == group[0] and value[1] == group[1] and value[2] == group[2]:
+                    coords.append([x, height - y])
     return coords
+
+
 
 
 def drawKDTree(pen, coords, shape):
@@ -69,8 +81,8 @@ def drawBasic(pen, coords, shape,color):
     start = time.time()
     width = int(shape[1])
     height = int(shape[0])
+    pen.color(color)
     pen.penup()
-    print(color)
     current = coords.pop(0)
     pen.goto(current[0] - (width/2), current[1]- (height/2))
 
@@ -89,6 +101,15 @@ def drawBasic(pen, coords, shape,color):
     print("execution time : ",end - start)
 
 
+def paint(pen,coords,shape,color):
+    width = int(shape[1])
+    height = int(shape[0])
+    pen.color(color)
+    pen.penup()
+    for coord in coords:
+        pen.setpos(coord[0] - (width/2), coord[1]- (height/2))
+        pen.dot(1)
+    
 
 
 
