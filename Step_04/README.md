@@ -18,11 +18,11 @@ source name_env/bin/activate
 ```
 - Pour lancer le script sur cette étape:
 ```
-python main.py -i ../images/licorne.png --speed 10
+python main.py -i ../images/lion.jpg --speed 20 --algorithm classification
 ```
 - Pour avoir des informations sur les paramètres de la ligne de commande:
 ```
-python -m main.py -h
+python main.py -h
 ```
 Il est aussi possible d'utiliser le launch.json avec le debugger vscode pour lancer les script. Les lignes de commande sont y déjà configurées.
 
