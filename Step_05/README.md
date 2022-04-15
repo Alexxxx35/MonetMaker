@@ -18,7 +18,7 @@ source name_env/bin/activate
 ```
 - Pour lancer le script sur cette étape:
 ```
-python main.py -i ../images/licorne.png --speed 10 --algorithm clustering
+python main.py -i ../images/lion.jpg --speed 20 --algorithm classification --painting realistic
 ```
 - Pour avoir des informations sur les paramètres de la ligne de commande:
 ```

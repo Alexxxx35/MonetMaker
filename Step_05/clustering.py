@@ -21,7 +21,7 @@ from sklearn.cluster import KMeans
 def cluster_pixels (matrix : list) :
     y, x, data_size = matrix.shape
     tmp = matrix.reshape((x*y,data_size))
-    kmeans = KMeans(n_clusters=22).fit(tmp)  
+    kmeans = KMeans(n_clusters=5).fit(tmp)  
     print( "CLUSTERING : DONE")
     for i,value in enumerate(tmp):
         group = kmeans.labels_[i]
